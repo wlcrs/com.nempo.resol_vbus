@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+
+<head>
+    <script type="text/javascript">
+        Homey.setTitle(__('pair.title'));
+    </script>
+    <script src="pair.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 16px;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 4px;
+        }
+
+        .hint {
+            font-size: 0.8em;
+            color: #888;
+            margin-top: 2px;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            background-color: #e05c00;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #c44f00;
+        }
+
+        #status {
+            margin-top: 10px;
+            color: #c00;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <p data-i18n="pair.instructions"></p>
+
+    <label data-i18n="pair.deviceName">Device name</label>
+    <input id="deviceName" type="text" value="Resol VBus Controller">
+
+    <label data-i18n="pair.host">IP address / hostname</label>
+    <input id="host" type="text" placeholder="192.168.1.100">
+    <div class="hint" data-i18n="pair.hostHint">IP address of your VBus/LAN adapter</div>
+
+    <label data-i18n="pair.port">TCP port</label>
+    <input id="port" type="number" value="7053" min="1" max="65535">
+
+    <label data-i18n="pair.password">Password</label>
+    <input id="password" type="password" value="vbus">
+    <div class="hint" data-i18n="pair.passwordHint">Default is 'vbus'</div>
+
+    <div id="status"></div>
+    <button onclick="addDevice()" data-i18n="pair.addDevice">Add device</button>
+</body>
+
+</html>

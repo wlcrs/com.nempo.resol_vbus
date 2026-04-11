@@ -1,0 +1,47 @@
+{
+    "id": "com.nempo.resol_vbus",
+    "version": "0.1.0",
+    "compatibility": ">=5.0.0",
+    "sdk": 3,
+    "brandColor": "#e05c00",
+    "name": {
+        "en": "Resol VBus Solar Controller",
+        "nl": "Resol VBus Zonnecollector"
+    },
+    "description": {
+        "en": "Read-only integration for Resol/Nau Solar VBus controllers via VBus/LAN adapter",
+        "nl": "Alleen-lezen integratie voor Resol/Nau Solar VBus regelaars via VBus/LAN adapter"
+    },
+    "category": [
+        "energy"
+    ],
+    "permissions": [],
+    "images": {
+        "small": "/assets/images/small.png",
+        "large": "/assets/images/large.png"
+    },
+    "author": {
+        "name": "nempo"
+    },
+    "capabilities": {
+        "meter_pump_hours": {
+            "type": "number",
+            "title": {
+                "en": "Pump operating hours",
+                "nl": "Pomp draaiuren"
+            },
+            "units": {
+                "en": "h",
+                "nl": "u"
+            },
+            "decimals": 0,
+            "getable": true,
+            "setable": false,
+            "insights": true,
+            "insightsTitleTrue": null,
+            "insightsTitleFalse": null,
+            "uiComponent": "sensor",
+            "icon": "/assets/pump-hours.svg"
+        }
+    }
+}

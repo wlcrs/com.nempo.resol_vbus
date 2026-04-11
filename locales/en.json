@@ -1,0 +1,15 @@
+{
+    "pair": {
+        "title": "Add Resol VBus Controller",
+        "instructions": "Enter the connection details of your VBus/LAN adapter.",
+        "deviceName": "Device name",
+        "host": "IP address / hostname",
+        "hostHint": "IP address of your VBus/LAN adapter",
+        "port": "TCP port",
+        "password": "Password",
+        "passwordHint": "Default is 'vbus'",
+        "addDevice": "Add device",
+        "errorNoName": "Please enter a device name.",
+        "errorNoHost": "Please enter the IP address or hostname of your VBus/LAN adapter."
+    }
+}

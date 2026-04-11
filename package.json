@@ -1,0 +1,16 @@
+{
+    "name": "com.nempo.resol_vbus",
+    "version": "0.1.0",
+    "description": "Homey app for Resol VBus solar controller",
+    "main": "app.js",
+    "engines": {
+        "node": ">=12.0.0"
+    },
+    "dependencies": {
+        "resol-vbus-core-nodejs": "^0.4.0",
+        "resol-vbus-core-vsf": "^0.1.68"
+    },
+    "devDependencies": {
+        "homey": "^2.10.0"
+    }
+}

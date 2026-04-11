@@ -1,0 +1,15 @@
+{
+    "pair": {
+        "title": "Resol VBus Regelaar toevoegen",
+        "instructions": "Vul de verbindingsgegevens van uw VBus/LAN adapter in.",
+        "deviceName": "Apparaatnaam",
+        "host": "IP-adres / hostnaam",
+        "hostHint": "IP-adres van uw VBus/LAN adapter",
+        "port": "TCP poort",
+        "password": "Wachtwoord",
+        "passwordHint": "Standaard is 'vbus'",
+        "addDevice": "Apparaat toevoegen",
+        "errorNoName": "Voer een apparaatnaam in.",
+        "errorNoHost": "Voer het IP-adres of de hostnaam van uw VBus/LAN adapter in."
+    }
+}
