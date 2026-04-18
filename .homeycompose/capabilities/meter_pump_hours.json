@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Pump operating hours",
+    "nl": "Pomp draaiuren"
+  },
+  "units": {
+    "en": "h",
+    "nl": "u"
+  },
+  "decimals": 0,
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "uiComponent": "sensor"
+}
