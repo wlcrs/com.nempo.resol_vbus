@@ -38,8 +38,7 @@
             "getable": true,
             "setable": false,
             "insights": true,
-            "uiComponent": "sensor",
-            "icon": "/assets/pump-hours.svg"
+            "uiComponent": "sensor"
         }
     }
 }
