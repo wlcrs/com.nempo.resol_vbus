@@ -201,7 +201,10 @@ def handle_client(conn: socket.socket, addr):
             # Generate some varying test values
             solar_temp = 55.0 + (tick % 20)  # 55–74 °C
             tank_temp = 40.0 + (tick % 15)  # 40–54 °C
-            pump_speed = 100 if solar_temp > tank_temp + 5 else 0
+            # Pump off every 4th tick so the inactive state is exercised
+            pump_speed = (
+                0 if (tick % 4 == 3) else (100 if solar_temp > tank_temp + 5 else 0)
+            )
 
             packet = build_packet(solar_temp, tank_temp, pump_speed)
             print(

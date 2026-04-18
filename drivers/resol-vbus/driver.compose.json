@@ -11,8 +11,7 @@
     "capabilities": [
         "measure_temperature.solar",
         "measure_temperature.tank",
-        "pump_active",
-        "meter_pump_hours"
+        "pump_active"
     ],
     "capabilitiesOptions": {
         "measure_temperature.solar": {

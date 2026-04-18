@@ -9,6 +9,11 @@ class ResolVbusDevice extends Homey.Device {
   async onInit() {
     this.log("Resol VBus device initializing...");
 
+    // Migrate devices paired before alarm_generic.pump was replaced by pump_active
+    if (!this.hasCapability("pump_active")) {
+      await this.addCapability("pump_active");
+    }
+
     this._reader = null;
     this._reconnectTimer = null;
 
@@ -128,11 +133,14 @@ class ResolVbusDevice extends Homey.Device {
 
     if (readings.pumpActive != null) {
       promises.push(
-        this.setCapabilityValue("pump_active", readings.pumpActive),
+        !this.setCapabilityValue("pump_active", readings.pumpActive),
       );
     }
 
     if (readings.pumpHours != null) {
+      if (!this.hasCapability("meter_pump_hours")) {
+        await this.addCapability("meter_pump_hours");
+      }
       promises.push(
         this.setCapabilityValue("meter_pump_hours", readings.pumpHours),
       );
