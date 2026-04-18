@@ -23,10 +23,10 @@ Field names are configurable in the device settings, so other controller models 
 |---|---|
 | Solar collector temperature | Temperature sensor 1 (°C) |
 | Storage tank temperature | Temperature sensor 2 (°C) |
-| Pump active | Alarm — true when pump speed > 0 % |
+| Pump active | Sensor — true when pump speed > 0 % |
 | Pump operating hours | Total pump run-time (h) |
 
-> **Note:** *Pump operating hours* is not present in all controller models. The DeltaSol M (`0x7311`) packet does not include this field. If your controller does not expose it, the capability will simply never update.
+> **Note:** *Pump operating hours* is not present in all controller models. The DeltaSol M (`0x7311`) packet does not include this field. The capability is added to the device on-demand the first time a value is received; if your controller does not expose it, the capability will not appear at all.
 
 ## Installation
 
@@ -58,7 +58,7 @@ The app matches VBus packet fields by their English name as defined in the Resol
 | Pump speed field name | `Pump speed relay 1` |
 | Pump hours field name | `Operating hours relay 1` |
 
-To find the correct field names for your controller, use the `find_fields.js` helper in the `mock-server/` directory or consult the [Resol VBus specification](https://danielwippermann.github.io/resol-vbus/#/vsf).
+To find the correct field names for your controller, consult the [Resol VBus specification](https://danielwippermann.github.io/resol-vbus/#/vsf).
 
 ## Architecture
 
@@ -67,7 +67,7 @@ VBus/LAN adapter (TCP :7053)
         │
         ▼
 lib/vbus-reader.js          (EventEmitter wrapping NetLiveTransceiver)
-        │  emits: data, connect, disconnect
+        │  emits: data, connect, unavailable, disconnect
         ▼
 drivers/resol-vbus/device.js  (Homey Device — maps readings to capabilities)
 ```
@@ -109,3 +109,8 @@ Expected output:
 homey app run      # live-reload onto a nearby Homey during development
 homey app install  # install as a published app
 ```
+
+
+## Acknowledgements
+
+The development of this app was sponsored by Laurens Van Acker
