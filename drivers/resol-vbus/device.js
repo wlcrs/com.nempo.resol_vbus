@@ -88,6 +88,13 @@ class ResolVbusDevice extends Homey.Device {
       }, UNAVAILABLE_DEBOUNCE_MS);
     });
 
+    this._reader.on("disconnect", () => {
+      // NetLiveTransceiver gave up retrying. Schedule a full reconnect.
+      if (this._reader !== reader) return;
+      this.error("VBus transceiver gave up, scheduling full reconnect...");
+      this._scheduleReconnect();
+    });
+
     // Mark unavailable immediately while the initial connection is in progress
     await this.setUnavailable(this.homey.__("device.connecting")).catch(
       () => {},
