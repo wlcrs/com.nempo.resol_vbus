@@ -21,6 +21,27 @@
     "large": "/assets/images/large.png"
   },
   "author": {
-    "name": "nempo"
-  }
+    "name": "Thijs Walcarius"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Thijs Walcarius"
+      },
+      {
+        "name": "Laurens Van Acker"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "githubSponsors": {
+        "username": "wlcrs"
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/wlcrs/com.nempo.resol_vbus/issues"
+  },
+  "source": "https://github.com/wlcrs/com.nempo.resol_vbus"
 }
