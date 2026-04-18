@@ -1,0 +1,12 @@
+{
+    "type": "boolean",
+    "title": {
+        "en": "Pump active",
+        "nl": "Pomp actief"
+    },
+    "getable": true,
+    "setable": false,
+    "insights": true,
+    "uiComponent": "sensor",
+    "icon": "/assets/pump-hours.svg"
+}

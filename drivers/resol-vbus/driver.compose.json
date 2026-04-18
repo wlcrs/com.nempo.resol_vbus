@@ -11,7 +11,7 @@
     "capabilities": [
         "measure_temperature.solar",
         "measure_temperature.tank",
-        "alarm_generic.pump",
+        "pump_active",
         "meter_pump_hours"
     ],
     "capabilitiesOptions": {
@@ -29,7 +29,7 @@
             },
             "decimals": 1
         },
-        "alarm_generic.pump": {
+        "pump_active": {
             "title": {
                 "en": "Pump active",
                 "nl": "Pomp actief"

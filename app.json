@@ -1,213 +1,225 @@
 {
-  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
-  "id": "com.nempo.resol_vbus",
-  "version": "0.1.0",
-  "compatibility": ">=5.0.0",
-  "sdk": 3,
-  "brandColor": "#e05c00",
-  "name": {
-    "en": "Resol VBus Solar Controller",
-    "nl": "Resol VBus Zonnecollector"
-  },
-  "description": {
-    "en": "Read-only integration for Resol/Nau Solar VBus controllers via VBus/LAN adapter",
-    "nl": "Alleen-lezen integratie voor Resol/Nau Solar VBus regelaars via VBus/LAN adapter"
-  },
-  "category": [
-    "energy"
-  ],
-  "permissions": [],
-  "images": {
-    "small": "/assets/images/small.png",
-    "large": "/assets/images/large.png"
-  },
-  "author": {
-    "name": "nempo"
-  },
-  "drivers": [
-    {
-      "name": {
-        "en": "Resol VBus Controller",
-        "nl": "Resol VBus Regelaar"
-      },
-      "images": {
-        "small": "./drivers/resol-vbus/assets/small.png",
-        "large": "./drivers/resol-vbus/assets/large.png"
-      },
-      "class": "sensor",
-      "capabilities": [
-        "measure_temperature.solar",
-        "measure_temperature.tank",
-        "alarm_generic.pump",
-        "meter_pump_hours"
-      ],
-      "capabilitiesOptions": {
-        "measure_temperature.solar": {
-          "title": {
-            "en": "Solar collector temperature",
-            "nl": "Zonnecollector temperatuur"
-          },
-          "decimals": 1
-        },
-        "measure_temperature.tank": {
-          "title": {
-            "en": "Storage tank temperature",
-            "nl": "Boiler temperatuur"
-          },
-          "decimals": 1
-        },
-        "alarm_generic.pump": {
-          "title": {
-            "en": "Pump active",
-            "nl": "Pomp actief"
-          }
+    "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+    "id": "com.nempo.resol_vbus",
+    "version": "0.1.0",
+    "compatibility": ">=5.0.0",
+    "sdk": 3,
+    "brandColor": "#e05c00",
+    "name": {
+        "en": "Resol VBus Solar Controller",
+        "nl": "Resol VBus Zonnecollector"
+    },
+    "description": {
+        "en": "Read-only integration for Resol/Nau Solar VBus controllers via VBus/LAN adapter",
+        "nl": "Alleen-lezen integratie voor Resol/Nau Solar VBus regelaars via VBus/LAN adapter"
+    },
+    "category": [
+        "energy"
+    ],
+    "permissions": [],
+    "images": {
+        "small": "/assets/images/small.png",
+        "large": "/assets/images/large.png"
+    },
+    "author": {
+        "name": "nempo"
+    },
+    "drivers": [
+        {
+            "name": {
+                "en": "Resol VBus Controller",
+                "nl": "Resol VBus Regelaar"
+            },
+            "images": {
+                "small": "./drivers/resol-vbus/assets/small.png",
+                "large": "./drivers/resol-vbus/assets/large.png"
+            },
+            "class": "sensor",
+            "capabilities": [
+                "measure_temperature.solar",
+                "measure_temperature.tank",
+                "pump_active",
+                "meter_pump_hours"
+            ],
+            "capabilitiesOptions": {
+                "measure_temperature.solar": {
+                    "title": {
+                        "en": "Solar collector temperature",
+                        "nl": "Zonnecollector temperatuur"
+                    },
+                    "decimals": 1
+                },
+                "measure_temperature.tank": {
+                    "title": {
+                        "en": "Storage tank temperature",
+                        "nl": "Boiler temperatuur"
+                    },
+                    "decimals": 1
+                },
+                "pump_active": {
+                    "title": {
+                        "en": "Pump active",
+                        "nl": "Pomp actief"
+                    }
+                }
+            },
+            "pair": [
+                {
+                    "id": "pair"
+                }
+            ],
+            "settings": [
+                {
+                    "type": "group",
+                    "label": {
+                        "en": "Device connection",
+                        "nl": "Apparaat verbinding"
+                    },
+                    "children": [
+                        {
+                            "id": "host",
+                            "type": "text",
+                            "label": {
+                                "en": "IP address / hostname",
+                                "nl": "IP-adres / hostnaam"
+                            },
+                            "value": ""
+                        },
+                        {
+                            "id": "port",
+                            "type": "number",
+                            "label": {
+                                "en": "TCP port",
+                                "nl": "TCP poort"
+                            },
+                            "value": 7053,
+                            "attr": {
+                                "min": 1,
+                                "max": 65535
+                            }
+                        },
+                        {
+                            "id": "password",
+                            "type": "password",
+                            "label": {
+                                "en": "Password",
+                                "nl": "Wachtwoord"
+                            },
+                            "value": "vbus"
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "label": {
+                        "en": "Field mapping",
+                        "nl": "Veld toewijzing"
+                    },
+                    "children": [
+                        {
+                            "id": "solar_temp_field",
+                            "type": "text",
+                            "label": {
+                                "en": "Solar temperature field name",
+                                "nl": "Veldnaam zonnecollector temperatuur"
+                            },
+                            "hint": {
+                                "en": "VBus field name for the solar collector temperature sensor",
+                                "nl": "VBus veldnaam voor de zonnecollector temperatuursensor"
+                            },
+                            "value": "Temperature sensor 1"
+                        },
+                        {
+                            "id": "tank_temp_field",
+                            "type": "text",
+                            "label": {
+                                "en": "Tank temperature field name",
+                                "nl": "Veldnaam boiler temperatuur"
+                            },
+                            "hint": {
+                                "en": "VBus field name for the storage tank temperature sensor",
+                                "nl": "VBus veldnaam voor de boiler temperatuursensor"
+                            },
+                            "value": "Temperature sensor 2"
+                        },
+                        {
+                            "id": "pump_speed_field",
+                            "type": "text",
+                            "label": {
+                                "en": "Pump speed field name",
+                                "nl": "Veldnaam pompsnelheid"
+                            },
+                            "hint": {
+                                "en": "VBus field name for the pump speed relay",
+                                "nl": "VBus veldnaam voor het pomp relais"
+                            },
+                            "value": "Pump speed relay 1"
+                        },
+                        {
+                            "id": "pump_hours_field",
+                            "type": "text",
+                            "label": {
+                                "en": "Pump hours field name",
+                                "nl": "Veldnaam pomp draaiuren"
+                            },
+                            "hint": {
+                                "en": "VBus field name for pump operating hours",
+                                "nl": "VBus veldnaam voor pomp draaiuren"
+                            },
+                            "value": "Operating hours relay 1"
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "label": {
+                        "en": "Device information",
+                        "nl": "Apparaatinformatie"
+                    },
+                    "children": [
+                        {
+                            "id": "last_seen",
+                            "type": "label",
+                            "label": {
+                                "en": "Last data received",
+                                "nl": "Laatste data ontvangen"
+                            },
+                            "value": "Never"
+                        }
+                    ]
+                }
+            ],
+            "id": "resol-vbus"
         }
-      },
-      "pair": [
-        {
-          "id": "pair"
-        }
-      ],
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device connection",
-            "nl": "Apparaat verbinding"
-          },
-          "children": [
-            {
-              "id": "host",
-              "type": "text",
-              "label": {
-                "en": "IP address / hostname",
-                "nl": "IP-adres / hostnaam"
-              },
-              "value": ""
+    ],
+    "capabilities": {
+        "meter_pump_hours": {
+            "type": "number",
+            "title": {
+                "en": "Pump operating hours",
+                "nl": "Pomp draaiuren"
             },
-            {
-              "id": "port",
-              "type": "number",
-              "label": {
-                "en": "TCP port",
-                "nl": "TCP poort"
-              },
-              "value": 7053,
-              "attr": {
-                "min": 1,
-                "max": 65535
-              }
+            "units": {
+                "en": "h",
+                "nl": "u"
             },
-            {
-              "id": "password",
-              "type": "password",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              },
-              "value": "vbus"
-            }
-          ]
+            "decimals": 0,
+            "getable": true,
+            "setable": false,
+            "insights": true,
+            "uiComponent": "sensor"
         },
-        {
-          "type": "group",
-          "label": {
-            "en": "Field mapping",
-            "nl": "Veld toewijzing"
-          },
-          "children": [
-            {
-              "id": "solar_temp_field",
-              "type": "text",
-              "label": {
-                "en": "Solar temperature field name",
-                "nl": "Veldnaam zonnecollector temperatuur"
-              },
-              "hint": {
-                "en": "VBus field name for the solar collector temperature sensor",
-                "nl": "VBus veldnaam voor de zonnecollector temperatuursensor"
-              },
-              "value": "Temperature sensor 1"
+        "pump_active": {
+            "type": "boolean",
+            "title": {
+                "en": "Pump active",
+                "nl": "Pomp actief"
             },
-            {
-              "id": "tank_temp_field",
-              "type": "text",
-              "label": {
-                "en": "Tank temperature field name",
-                "nl": "Veldnaam boiler temperatuur"
-              },
-              "hint": {
-                "en": "VBus field name for the storage tank temperature sensor",
-                "nl": "VBus veldnaam voor de boiler temperatuursensor"
-              },
-              "value": "Temperature sensor 2"
-            },
-            {
-              "id": "pump_speed_field",
-              "type": "text",
-              "label": {
-                "en": "Pump speed field name",
-                "nl": "Veldnaam pompsnelheid"
-              },
-              "hint": {
-                "en": "VBus field name for the pump speed relay",
-                "nl": "VBus veldnaam voor het pomp relais"
-              },
-              "value": "Pump speed relay 1"
-            },
-            {
-              "id": "pump_hours_field",
-              "type": "text",
-              "label": {
-                "en": "Pump hours field name",
-                "nl": "Veldnaam pomp draaiuren"
-              },
-              "hint": {
-                "en": "VBus field name for pump operating hours",
-                "nl": "VBus veldnaam voor pomp draaiuren"
-              },
-              "value": "Operating hours relay 1"
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "Device information",
-            "nl": "Apparaatinformatie"
-          },
-          "children": [
-            {
-              "id": "last_seen",
-              "type": "label",
-              "label": {
-                "en": "Last data received",
-                "nl": "Laatste data ontvangen"
-              },
-              "value": "Never"
-            }
-          ]
+            "getable": true,
+            "setable": false,
+            "insights": true,
+            "uiComponent": "sensor",
+            "icon": "/assets/pump-hours.svg"
         }
-      ],
-      "id": "resol-vbus"
     }
-  ],
-  "capabilities": {
-    "meter_pump_hours": {
-      "type": "number",
-      "title": {
-        "en": "Pump operating hours",
-        "nl": "Pomp draaiuren"
-      },
-      "units": {
-        "en": "h",
-        "nl": "u"
-      },
-      "decimals": 0,
-      "getable": true,
-      "setable": false,
-      "insights": true,
-      "uiComponent": "sensor"
-    }
-  }
 }

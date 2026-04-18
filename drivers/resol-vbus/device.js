@@ -128,7 +128,7 @@ class ResolVbusDevice extends Homey.Device {
 
     if (readings.pumpActive != null) {
       promises.push(
-        this.setCapabilityValue("alarm_generic.pump", readings.pumpActive),
+        this.setCapabilityValue("pump_active", readings.pumpActive),
       );
     }
 
