@@ -4,6 +4,8 @@ const Homey = require("homey");
 const VbusReader = require("../../lib/vbus-reader");
 
 const RECONNECT_DELAY_MS = 30000;
+// How long the connection must be lost before marking the device unavailable in the UI
+const UNAVAILABLE_DEBOUNCE_MS = 10000;
 
 class ResolVbusDevice extends Homey.Device {
   async onInit() {
@@ -16,6 +18,7 @@ class ResolVbusDevice extends Homey.Device {
 
     this._reader = null;
     this._reconnectTimer = null;
+    this._unavailableTimer = null;
 
     await this._startReader();
   }
@@ -63,16 +66,26 @@ class ResolVbusDevice extends Homey.Device {
       this.log(
         `Connected to VBus at ${settings.host}:${settings.port || 7053}`,
       );
+      // Cancel any pending unavailable notification
+      if (this._unavailableTimer) {
+        clearTimeout(this._unavailableTimer);
+        this._unavailableTimer = null;
+      }
       this.setAvailable().catch((err) =>
         this.error("setAvailable failed:", err),
       );
     });
 
     this._reader.on("unavailable", () => {
-      this.log("VBus connection lost, auto-reconnecting...");
-      this.setUnavailable(
-        this.homey.__("device.disconnected"),
-      ).catch(() => {});
+      // Debounce: only mark unavailable if the connection doesn't recover quickly
+      if (this._unavailableTimer) return;
+      this._unavailableTimer = setTimeout(() => {
+        this._unavailableTimer = null;
+        this.log("VBus connection lost, auto-reconnecting...");
+        this.setUnavailable(
+          this.homey.__("device.disconnected"),
+        ).catch(() => {});
+      }, UNAVAILABLE_DEBOUNCE_MS);
     });
 
     // Mark unavailable immediately while the initial connection is in progress
@@ -94,6 +107,11 @@ class ResolVbusDevice extends Homey.Device {
     if (this._reconnectTimer) {
       clearTimeout(this._reconnectTimer);
       this._reconnectTimer = null;
+    }
+
+    if (this._unavailableTimer) {
+      clearTimeout(this._unavailableTimer);
+      this._unavailableTimer = null;
     }
 
     if (this._reader) {
