@@ -10,6 +10,7 @@
         "passwordHint": "Default is 'vbus'",
         "addDevice": "Add device",
         "errorNoName": "Please enter a device name.",
-        "errorNoHost": "Please enter the IP address or hostname of your VBus/LAN adapter."
+        "errorNoHost": "Please enter the IP address or hostname of your VBus/LAN adapter.",
+        "testingConnection": "Testing connection..."
     }
 }

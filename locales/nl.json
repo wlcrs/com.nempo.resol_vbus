@@ -10,6 +10,7 @@
         "passwordHint": "Standaard is 'vbus'",
         "addDevice": "Apparaat toevoegen",
         "errorNoName": "Voer een apparaatnaam in.",
-        "errorNoHost": "Voer het IP-adres of de hostnaam van uw VBus/LAN adapter in."
+        "errorNoHost": "Voer het IP-adres of de hostnaam van uw VBus/LAN adapter in.",
+        "testingConnection": "Verbinding testen..."
     }
 }
