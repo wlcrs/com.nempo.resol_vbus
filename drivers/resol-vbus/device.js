@@ -55,28 +55,39 @@ class ResolVbusDevice extends Homey.Device {
     };
 
     this._reader = new VbusReader(readerOptions);
+    const reader = this._reader;
 
     this._reader.on("data", (readings) => this._handleReadings(readings));
 
-    this._reader.on("error", (err) => {
-      this.error("VBus reader error:", err.message);
-      this._scheduleReconnect();
-    });
-
-    this._reader.on("disconnect", () => {
-      this.log("VBus disconnected");
-      this._scheduleReconnect();
-    });
-
-    try {
-      await this._reader.connect();
+    this._reader.on("connect", () => {
       this.log(
         `Connected to VBus at ${settings.host}:${settings.port || 7053}`,
       );
-    } catch (err) {
+      this.setAvailable().catch((err) =>
+        this.error("setAvailable failed:", err),
+      );
+    });
+
+    this._reader.on("unavailable", () => {
+      this.log("VBus connection lost, auto-reconnecting...");
+      this.setUnavailable(
+        this.homey.__("device.disconnected"),
+      ).catch(() => {});
+    });
+
+    // Mark unavailable immediately while the initial connection is in progress
+    await this.setUnavailable(this.homey.__("device.connecting")).catch(
+      () => {},
+    );
+
+    // Start connecting without awaiting, so onInit doesn't block.
+    // Initial connect failures are retried via _scheduleReconnect.
+    // Mid-stream drops are retried automatically by NetLiveTransceiver.
+    reader.connect().catch((err) => {
+      if (this._reader !== reader) return; // reader was replaced (settings change)
       this.error("Failed to connect to VBus:", err.message);
       this._scheduleReconnect();
-    }
+    });
   }
 
   async _stopReader() {
@@ -133,7 +144,7 @@ class ResolVbusDevice extends Homey.Device {
 
     if (readings.pumpActive != null) {
       promises.push(
-        !this.setCapabilityValue("pump_active", readings.pumpActive),
+        this.setCapabilityValue("pump_active", readings.pumpActive),
       );
     }
 
