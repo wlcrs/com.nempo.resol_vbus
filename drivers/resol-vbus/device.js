@@ -3,7 +3,8 @@
 const Homey = require("homey");
 const VbusReader = require("../../lib/vbus-reader");
 
-const RECONNECT_DELAY_MS = 30000;
+const INITIAL_RECONNECT_DELAY_MS = 1000;
+const MAX_RECONNECT_DELAY_MS = 60000;
 // How long the connection must be lost before marking the device unavailable in the UI
 const UNAVAILABLE_DEBOUNCE_MS = 10000;
 
@@ -18,6 +19,7 @@ class ResolVbusDevice extends Homey.Device {
 
     this._reader = null;
     this._reconnectTimer = null;
+    this._reconnectAttempt = 0;
     this._unavailableTimer = null;
 
     await this._startReader();
@@ -66,6 +68,7 @@ class ResolVbusDevice extends Homey.Device {
       this.log(
         `Connected to VBus at ${settings.host}:${settings.port || 7053}`,
       );
+      this._reconnectAttempt = 0;
       // Cancel any pending unavailable notification
       if (this._unavailableTimer) {
         clearTimeout(this._unavailableTimer);
@@ -82,9 +85,9 @@ class ResolVbusDevice extends Homey.Device {
       this._unavailableTimer = setTimeout(() => {
         this._unavailableTimer = null;
         this.log("VBus connection lost, auto-reconnecting...");
-        this.setUnavailable(
-          this.homey.__("device.disconnected"),
-        ).catch(() => {});
+        this.setUnavailable(this.homey.__("device.disconnected")).catch(
+          () => {},
+        );
       }, UNAVAILABLE_DEBOUNCE_MS);
     });
 
@@ -134,12 +137,23 @@ class ResolVbusDevice extends Homey.Device {
 
   _scheduleReconnect() {
     if (this._reconnectTimer) return;
-    this.log(`Scheduling reconnect in ${RECONNECT_DELAY_MS / 1000}s`);
+
+    const attempt = this._reconnectAttempt + 1;
+    const delayMs = Math.min(
+      INITIAL_RECONNECT_DELAY_MS * Math.pow(2, attempt - 1),
+      MAX_RECONNECT_DELAY_MS,
+    );
+
+    this._reconnectAttempt = attempt;
+    this.log(
+      `Scheduling reconnect attempt ${attempt} in ${Math.round(delayMs / 1000)}s`,
+    );
+
     this._reconnectTimer = setTimeout(async () => {
       this._reconnectTimer = null;
       await this._stopReader();
       await this._startReader();
-    }, RECONNECT_DELAY_MS);
+    }, delayMs);
   }
 
   // ---------------------------------------------------------------------------
